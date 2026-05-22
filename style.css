@@ -1,0 +1,247 @@
+@import url('https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700&family=DM+Sans:wght@300;400;500&display=swap');
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+:root {
+  --red:        #2f7ae6;
+  --red-dim:    #2460b3;
+  --red-glow:   rgba(47, 122, 230, 0.18);
+  --bg:         #0a0a0b;
+  --surface:    #111114;
+  --surface-2:  #18181d;
+  --border:     rgba(255, 255, 255, 0.06);
+  --border-hot: rgba(47, 122, 230, 0.45);
+  --text:       #e8e8ec;
+  --muted:      #6b6b78;
+  --subtle:     #3a3a45;
+}
+
+body {
+  background-color: var(--bg);
+  background-image:
+    radial-gradient(ellipse 80% 50% at 50% -10%, rgba(47, 122, 230, 0.07) 0%, transparent 70%);
+  color: var(--text);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  min-height: 100vh;
+  font-family: 'DM Sans', sans-serif;
+  font-size: 15px;
+  line-height: 1.6;
+  -webkit-font-smoothing: antialiased;
+}
+
+/* ── Title ─────────────────────────────── */
+h1 {
+  margin-bottom: 2rem;
+  font-family: 'Syne', sans-serif;
+  font-size: 1.75rem;
+  font-weight: 700;
+  letter-spacing: -0.02em;
+  color: var(--text);
+  text-align: center;
+}
+
+h1 span {
+  color: var(--red);
+}
+
+/* ── Form card ─────────────────────────── */
+form {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  padding: 2.25rem 2rem;
+  border-radius: 18px;
+  width: 100%;
+  max-width: 420px;
+  position: relative;
+  overflow: hidden;
+}
+
+form::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  background: linear-gradient(135deg, rgba(255,255,255,0.025) 0%, transparent 60%);
+  pointer-events: none;
+}
+
+/* ── Labels ────────────────────────────── */
+label {
+  display: block;
+  margin: 1.25rem 0 0.5rem;
+  font-size: 0.78rem;
+  font-weight: 500;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--muted);
+}
+
+/* ── Input wrapper (for show button) ───── */
+.input-wrap {
+  position: relative;
+  display: flex;
+  align-items: center;
+}
+
+/* ── Inputs ────────────────────────────── */
+input[type="text"],
+input[type="password"] {
+  width: 100%;
+  padding: 0.78rem 2.8rem 0.78rem 1rem;
+  background: var(--surface-2);
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  color: var(--text);
+  font-family: 'DM Sans', sans-serif;
+  font-size: 0.95rem;
+  font-weight: 300;
+  letter-spacing: 0.02em;
+  transition: border-color 0.2s, box-shadow 0.2s, background 0.2s;
+  outline: none;
+}
+
+input[type="text"]::placeholder,
+input[type="password"]::placeholder {
+  color: var(--subtle);
+}
+
+input[type="text"]:hover,
+input[type="password"]:hover {
+  border-color: rgba(255, 255, 255, 0.12);
+}
+
+input[type="text"]:focus,
+input[type="password"]:focus {
+  border-color: var(--border-hot);
+  background: #1c1c22;
+  box-shadow: 0 0 0 3px var(--red-glow);
+}
+
+/* ── Strength bar ──────────────────────── */
+.strength-bar {
+  display: flex;
+  gap: 5px;
+  margin-top: 10px;
+}
+
+.strength-bar .seg {
+  flex: 1;
+  height: 3px;
+  border-radius: 99px;
+  background: var(--surface-2);
+  border: 1px solid var(--border);
+  transition: background 0.35s ease;
+}
+
+/* ── Strength feedback text ────────────── */
+.feedback {
+  margin-top: 0.6rem;
+  font-size: 0.8rem;
+  font-weight: 500;
+  letter-spacing: 0.04em;
+  transition: color 0.3s;
+}
+
+.feedback.very-weak  { color: #e63030; }
+.feedback.weak       { color: #e6713e; }
+.feedback.medium     { color: #e6c030; }
+.feedback.strong     { color: #7ec850; }
+.feedback.very-strong{ color: #50c8aa; }
+
+/* Active bar segment colors */
+.feedback.very-weak   ~ .strength-bar .seg:nth-child(-n+1) { background: #e63030; }
+.feedback.weak        ~ .strength-bar .seg:nth-child(-n+2) { background: #e6713e; }
+.feedback.medium      ~ .strength-bar .seg:nth-child(-n+3) { background: #e6c030; }
+.feedback.strong      ~ .strength-bar .seg:nth-child(-n+4) { background: #7ec850; }
+.feedback.very-strong ~ .strength-bar .seg { background: #50c8aa; }
+
+/* ── Suggestions ───────────────────────── */
+ul {
+  list-style: none;
+  margin-top: 0.65rem;
+  padding: 0;
+}
+
+ul li {
+  display: flex;
+  align-items: flex-start;
+  gap: 8px;
+  font-size: 0.82rem;
+  color: var(--muted);
+  padding: 3px 0;
+  line-height: 1.5;
+}
+
+ul li::before {
+  content: '›';
+  color: var(--red-dim);
+  font-size: 1rem;
+  line-height: 1.3;
+  flex-shrink: 0;
+}
+
+/* ── Show/hide button ──────────────────── */
+button.show {
+  position: absolute;
+  right: 10px;
+  background: transparent;
+  border: none;
+  color: var(--muted);
+  padding: 0.3rem 0.4rem;
+  cursor: pointer;
+  border-radius: 6px;
+  font-size: 0.78rem;
+  font-family: 'DM Sans', sans-serif;
+  font-weight: 500;
+  letter-spacing: 0.04em;
+  transition: color 0.2s, background 0.2s;
+  line-height: 1;
+}
+
+button.show:hover {
+  color: #2f7ae6;
+  background: rgba(47, 122, 230, 0.1);
+}
+
+/* ── Submit button ─────────────────────── */
+button[type="submit"] {
+  width: 100%;
+  margin-top: 1.75rem;
+  padding: 0.85rem;
+  background: var(--red);
+  border: none;
+  border-radius: 10px;
+  color: #fff;
+  font-family: 'Syne', sans-serif;
+  font-size: 0.9rem;
+  font-weight: 600;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  cursor: pointer;
+  transition: background 0.2s, transform 0.15s, box-shadow 0.2s;
+}
+
+button[type="submit"]:hover {
+  background: #2460b3;
+  box-shadow: 0 4px 20px rgba(47, 122, 230, 0.35);
+  transform: translateY(-1px);
+}
+
+button[type="submit"]:active {
+  transform: translateY(0);
+  box-shadow: none;
+}
+
+/* ── Divider ───────────────────────────── */
+.divider {
+  height: 1px;
+  background: var(--border);
+  margin: 1.5rem 0 0;
+}

@@ -1,0 +1,4 @@
+fastapi      # Modern web framework for building APIs with Python
+uvicorn      # ASGI server used to run FastAPI applications
+zxcvbn       # Password strength estimator for evaluating password security
+pydantic     # Data validation and parsing using Python type hints

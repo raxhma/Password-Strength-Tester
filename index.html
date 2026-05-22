@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Password Strength Tester</title>
+  <link rel="stylesheet" href="style.css" />
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+</head>
+<body>
+
+  <h1>Create a <span>Password</span></h1>
+
+  <form onsubmit="return false;">
+
+    <label for="username">Username</label>
+    <div class="input-wrap">
+      <input type="text" id="username" placeholder="your_username" autocomplete="off" />
+    </div>
+
+    <label for="password">Password</label>
+    <div class="input-wrap">
+      <input type="password" id="password" placeholder="Enter password…" oninput="checkStrength(this.value)" />
+      <button type="button" class="show" onclick="togglePassword()">SHOW</button>
+    </div>
+
+    <div class="strength-bar">
+      <div class="seg" id="s1"></div>
+      <div class="seg" id="s2"></div>
+      <div class="seg" id="s3"></div>
+      <div class="seg" id="s4"></div>
+      <div class="seg" id="s5"></div>
+    </div>
+
+    <p class="feedback" id="feedback"></p>
+    <ul id="hints"></ul>
+
+    <div class="divider"></div>
+
+    <button type="submit">Create Account</button>
+
+  </form>
+
+  <script>
+    const levels = [
+      { label: 'Very Weak',   color: '#e63030', fill: 1 },
+      { label: 'Weak',        color: '#e67e3e', fill: 2 },
+      { label: 'Medium',      color: '#e6c030', fill: 3 },
+      { label: 'Strong',      color: '#50a8e6', fill: 4 },
+      { label: 'Very Strong', color: '#50c8e6', fill: 5 },
+    ];
+
+    function score(v) {
+      let s = 0;
+      if (v.length >= 8)           s++;
+      if (v.length >= 12)          s++;
+      if (/[A-Z]/.test(v))         s++;
+      if (/[0-9]/.test(v))         s++;
+      if (/[^A-Za-z0-9]/.test(v))  s++;
+      return Math.min(s, 4);
+    }
+
+    function checkStrength(v) {
+      const fb    = document.getElementById('feedback');
+      const hints = document.getElementById('hints');
+
+      if (!v) {
+        fb.textContent = '';
+        hints.innerHTML = '';
+        for (let i = 1; i <= 5; i++)
+          document.getElementById('s' + i).style.background = '';
+        return;
+      }
+
+      const lvl = levels[score(v)];
+      fb.textContent = lvl.label;
+      fb.style.color  = lvl.color;
+
+      for (let i = 1; i <= 5; i++)
+        document.getElementById('s' + i).style.background =
+          i <= lvl.fill ? lvl.color : '';
+
+      const missing = [];
+      if (!/[A-Z]/.test(v))           missing.push('Add uppercase letters');
+      if (!/[0-9]/.test(v))           missing.push('Add numbers');
+      if (!/[^A-Za-z0-9]/.test(v))    missing.push('Add symbols (!@#$)');
+      if (v.length < 12)              missing.push('Use 12+ characters');
+
+      hints.innerHTML = missing.slice(0, 2)
+        .map(t => `<li>${t}</li>`)
+        .join('');
+    }
+
+    function togglePassword() {
+      const pw  = document.getElementById('password');
+      const btn = document.querySelector('button.show');
+      if (pw.type === 'password') {
+        pw.type      = 'text';
+        btn.textContent = 'HIDE';
+      } else {
+        pw.type      = 'password';
+        btn.textContent = 'SHOW';
+      }
+    }
+  </script>
+
+</body>
+</html>

@@ -1,0 +1,65 @@
+Password Strength Checker
+
+a simple password strength checker built with a FastAPI backend and an HTML/CSS frontend. It evaluates passwords in real time using customizable rules from rules.json and the zxcvbn algorithm.
+
+Users enter a username and password to receive:
+
+	*a strength rating (e.g., Weak, Fair, Strong)
+	*a numerical score
+	*suggestions for improving password security
+Project Files
+	*index.html –> User interface for entering credentials
+	*style.css –> Frontend styling
+	*main.py –> FastAPI backend application
+	*rules.json –> Configurable password rules
+	*requirements.txt –> Required Python packages
+	*start_server.bat –> Windows script to set up and run the server
+	*README.txt – Project documentation
+Python Dependencies
+	*fastapi –> Builds the backend API
+	*uvicorn –> Runs the FastAPI application
+	*pydantic –> Validates input data
+	*zxcvbn –> Measures password strength
+What Is a Virtual Environment?
+
+A virtual environment (venv) is an isolated Python workspace. It keeps this project's dependencies separate from other Python projects on your computer.
+
+Benefits:
+
+	*Prevents package conflicts
+	*Keeps your system Python clean
+	*Makes the project easier to share and reproduce
+How to Run the Project (Windows)
+1. Install Python
+Download Python 3.8 or later from Python Software Foundation
+During installation, select "Add Python to PATH"
+2. Start the Backend
+Double-click start_server.bat
+
+This script will automatically:
+
+	*Create a virtual environment (if needed)
+	*Activate it
+Install required packages
+Launch the FastAPI server at http://localhost:8000
+3. Open the Frontend
+Double-click index.html
+
+If the page does not connect properly, run a local web server: python -m http.server 5500
+Then open: http://localhost:5500/index.html
+
+Customization
+
+You can modify rules.json to adjust password requirements, such as:
+	*Minimum length
+	*Required uppercase letters
+	*Required numbers
+	*Required special characters
+Notes
+	*Start the backend before opening the frontend.
+	*Dependencies are installed only once.
+	*Running start_server.bat again will simply restart the server.
+
+Restarting the Application
+
+After closing the project, restart it by double-clicking: start_server.bat
